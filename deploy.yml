@@ -9,6 +9,7 @@ jobs:
 - name: build-tools
   plan:
   - get: flight-school
+    trigger: true
   - task: say-hello
     file: flight-school/say-hello.yml
 
