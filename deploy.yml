@@ -1,6 +1,7 @@
 resources:
   - name: flight-school
     type: git
+    check_every: 32s
     source:
       branch: master
       uri: https://github.com/yifanzz/flight-school  
@@ -16,6 +17,7 @@ jobs:
 - name: deploy-bottle
   plan:
   - get: flight-school
+    trigger: true
     passed: [ 'build-tools' ]
   - task: say-hello
     file: flight-school/say-hello.yml
@@ -23,6 +25,7 @@ jobs:
 - name: deploy-rail
   plan:
   - get: flight-school
+    trigger: true
     passed: [ 'build-tools' ]
   - task: say-hello
     file: flight-school/say-hello.yml
@@ -30,6 +33,7 @@ jobs:
 - name: deploy-stand
   plan:
   - get: flight-school
+    trigger: true
     passed: [ 'build-tools' ]
   - task: say-hello
     file: flight-school/say-hello.yml
@@ -37,6 +41,7 @@ jobs:
 - name: qualify-deployment
   plan:
   - get: flight-school
+    trigger: true
     passed: [ deploy-bottle, deploy-stand, deploy-rail]
   - task: say-hello
     file: flight-school/say-hello.yml
@@ -44,6 +49,7 @@ jobs:
 - name: qualify-table
   plan:
   - get: flight-school
+    trigger: true
     passed: [ deploy-bottle ]
   - task: say-hello
     file: flight-school/say-hello.yml
@@ -51,6 +57,7 @@ jobs:
 - name: qualify-player-login
   plan:
   - get: flight-school
+    trigger: true
     passed: [ deploy-stand ]
   - task: say-hello
     file: flight-school/say-hello.yml
@@ -58,6 +65,7 @@ jobs:
 - name: qualify-deployment-logs
   plan:
   - get: flight-school
+    trigger: true
     passed: [ deploy-bottle, deploy-rail ]
   - task: say-hello
     file: flight-school/say-hello.yml
