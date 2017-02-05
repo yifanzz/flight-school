@@ -1,0 +1,12 @@
+platform: linux
+
+image_resource:
+  source: {repository: ubuntu}
+  type: docker-image
+
+inputs:
+- name: flight-school
+
+run:
+  args: ['Hello, world!']
+  path: echo

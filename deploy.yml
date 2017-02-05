@@ -1,0 +1,74 @@
+resources:
+  - name: flight-school
+    type: git
+    source:
+      branch: master
+      uri: https://github.com/yifanzz/flight-school  
+
+jobs:
+- name: build-tools
+  plan:
+  - get: flight-school
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: deploy-bottle
+  plan:
+  - get: flight-school
+    passed: [ 'build-tools' ]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: deploy-rail
+  plan:
+  - get: flight-school
+    passed: [ 'build-tools' ]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: deploy-stand
+  plan:
+  - get: flight-school
+    passed: [ 'build-tools' ]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: qualify-deployment
+  plan:
+  - get: flight-school
+    passed: [ deploy-bottle, deploy-stand, deploy-rail]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: qualify-table
+  plan:
+  - get: flight-school
+    passed: [ deploy-bottle ]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: qualify-player-login
+  plan:
+  - get: flight-school
+    passed: [ deploy-stand ]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+- name: qualify-deployment-logs
+  plan:
+  - get: flight-school
+    passed: [ deploy-bottle, deploy-rail ]
+  - task: say-hello
+    file: flight-school/say-hello.yml
+
+# groups:
+# - name: base
+#   jobs:
+#   - build-tools
+
+# - name: deploy
+#   jobs:
+#   - deploy-stand
+#   - deploy-rail
+#   - deploy-bottle
+
